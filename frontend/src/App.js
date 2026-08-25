@@ -5,6 +5,8 @@ import WeatherCard from './components/WeatherCard';
 import Forecast from './components/Forecast';
 import './App.css';
 
+const API_BASE_URL = 'https://weather-app-siwes-production.up.railway.app';
+
 function App() {
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
@@ -13,16 +15,19 @@ function App() {
   const [unit, setUnit] = useState('C');
 
   const handleSearch = async (city) => {
+    const safeCity = encodeURIComponent(city.trim());
+
     setLoading(true);
     setError(null);
+
     try {
       const weatherRes = await axios.get(
-        `http://localhost:5000/api/weather/current/${city}`
+        `${API_BASE_URL}/api/weather/current/${safeCity}`
       );
       setWeather(weatherRes.data);
 
       const forecastRes = await axios.get(
-        `http://localhost:5000/api/weather/forecast/${city}`
+        `${API_BASE_URL}/api/weather/forecast/${safeCity}`
       );
       setForecast(forecastRes.data);
     } catch (err) {
@@ -38,6 +43,7 @@ function App() {
     if (unit === 'F') {
       return ((tempC * 9) / 5 + 32).toFixed(1);
     }
+
     return tempC.toFixed(1);
   };
 
