@@ -351,7 +351,7 @@ function App() {
       <header className="header">
         <div className="greeting">
           <span className="welcome">Welcome</span>
-          <span className="user-name">Calfin Danang</span>
+          <span className="user-name">9CELL</span>
         </div>
         <div className="tools">
           <form className="header-search-form" onSubmit={handleSearchSubmit}>
