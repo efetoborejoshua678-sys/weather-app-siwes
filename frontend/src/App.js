@@ -13,32 +13,32 @@ function App() {
   const [unit, setUnit] = useState('C');
 
   // Main Card & Hero State
-  const [currentCity, setCurrentCity] = useState('Central Jakarta');
-  const [currentCountry, setCurrentCountry] = useState('Indonesia');
-  const [currentTempC, setCurrentTempC] = useState(10);
-  const [currentCondition, setCurrentCondition] = useState('Strom with Heavy Rain');
-  const [currentWindMph, setCurrentWindMph] = useState(19);
-  const [currentHumidity, setCurrentHumidity] = useState(40);
-  const [currentGustKm, setCurrentGustKm] = useState(15);
+  const [currentCity, setCurrentCity] = useState('Port Harcourt');
+  const [currentCountry, setCurrentCountry] = useState('NG');
+  const [currentTempC, setCurrentTempC] = useState(27);
+  const [currentCondition, setCurrentCondition] = useState('Clouds');
+  const [currentWindMph, setCurrentWindMph] = useState(5);
+  const [currentHumidity, setCurrentHumidity] = useState(81);
+  const [currentGustKm, setCurrentGustKm] = useState(9);
   const [blurbText, setBlurbText] = useState(
-    'Partly cloudy with occasional snow showers. High around 50°F. Wind from the east 11 to 21 mph. Snow chance is 40%, with rainfall expected to be less than an inch.'
+    'Overcast clouds. High around 81°F. Wind from the west at 5 mph. Humidity is 81%, with pressure around 1010 hPa.'
   );
 
   // Forecast Strip State (6 values)
   const [forecastItems, setForecastItems] = useState([
-    { tempC: 11, day: 'Sunday', icon: '#i-cloud' },
-    { tempC: 13, day: 'Monday', icon: '#i-cloud2' },
-    { tempC: 14, day: 'Tuesday', icon: '#i-cloud2' },
-    { tempC: 10, day: 'Wednesday', icon: '#i-hail', active: true },
-    { tempC: 19, day: 'Thursday', icon: '#i-sun' },
-    { tempC: 12, day: 'Friday', icon: '#i-cloud' }
+    { tempC: 27, day: 'Sunday', icon: '#i-cloud' },
+    { tempC: 28, day: 'Monday', icon: '#i-cloud2' },
+    { tempC: 26, day: 'Tuesday', icon: '#i-cloud2' },
+    { tempC: 27, day: 'Wednesday', icon: '#i-hail', active: true },
+    { tempC: 29, day: 'Thursday', icon: '#i-sun' },
+    { tempC: 27, day: 'Friday', icon: '#i-cloud' }
   ]);
 
   // Regional Cards State
   const [regionalCards, setRegionalCards] = useState([
-    { country: 'Indonesia', city: 'North Jakarta', condition: 'Mostly Sunny', tempC: 12, icon: '#i-cloud' },
-    { country: 'Indonesia', city: 'Bandung', condition: 'Cloudy', tempC: 10, icon: '#i-cloud' },
-    { country: 'Indonesia', city: 'South Jakarta', condition: 'Sunny', tempC: 14, icon: '#i-cloud2' }
+    { country: 'Nigeria', city: 'Lagos', condition: 'Partly Cloudy', tempC: 28, icon: '#i-cloud' },
+    { country: 'Nigeria', city: 'Abuja', condition: 'Sunny', tempC: 30, icon: '#i-sun' },
+    { country: 'Nigeria', city: 'Calabar', condition: 'Cloudy', tempC: 26, icon: '#i-cloud2' }
   ]);
 
   // Helper to map weather condition to SVG icon symbol ID
@@ -168,13 +168,13 @@ function App() {
 
   // Fetch regional cards on initial load
   useEffect(() => {
-    updateCityWeather('Jakarta');
+    updateCityWeather('Port Harcourt');
 
     // Fetch regional cities concurrently
     const regionalCities = [
-      { country: 'Indonesia', city: 'North Jakarta' },
-      { country: 'Indonesia', city: 'Bandung' },
-      { country: 'Indonesia', city: 'South Jakarta' }
+      { country: 'Nigeria', city: 'Lagos' },
+      { country: 'Nigeria', city: 'Abuja' },
+      { country: 'Nigeria', city: 'Calabar' }
     ];
 
     Promise.all(
@@ -182,14 +182,14 @@ function App() {
         try {
           const data = await fetchCurrentWeatherData(item.city);
           return {
-            country: data.sys?.country === 'ID' ? 'Indonesia' : data.sys?.country || item.country,
+            country: data.sys?.country === 'NG' ? 'Nigeria' : data.sys?.country || item.country,
             city: data.name || item.city,
             condition: data.weather?.[0]?.main || 'Clear',
-            tempC: data.main?.temp ?? 12,
+            tempC: data.main?.temp ?? 28,
             icon: getIconForCondition(data.weather?.[0]?.main)
           };
         } catch (e) {
-          return { ...item, condition: 'Clear', tempC: 12, icon: '#i-cloud' };
+          return { ...item, condition: 'Clear', tempC: 28, icon: '#i-cloud' };
         }
       })
     ).then((results) => {

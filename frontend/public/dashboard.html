@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -7,9 +8,13 @@
   <title>9CELL Weather App</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500&display=swap"
+    rel="stylesheet">
   <style>
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -31,7 +36,8 @@
       }
     }
 
-    html, body {
+    html,
+    body {
       height: 100%;
       width: 100%;
       overflow: hidden;
@@ -61,9 +67,9 @@
       inset: 0;
       pointer-events: none;
       background:
-        linear-gradient(105deg, rgba(4,16,24,.34) 0%, rgba(4,16,24,.20) 40%, rgba(4,16,24,.06) 78%, transparent 100%),
-        linear-gradient(180deg, rgba(4,16,24,.12) 0%, transparent 22%),
-        linear-gradient(0deg, rgba(4,16,24,.07), rgba(4,16,24,.07));
+        linear-gradient(105deg, rgba(4, 16, 24, .34) 0%, rgba(4, 16, 24, .20) 40%, rgba(4, 16, 24, .06) 78%, transparent 100%),
+        linear-gradient(180deg, rgba(4, 16, 24, .12) 0%, transparent 22%),
+        linear-gradient(0deg, rgba(4, 16, 24, .07), rgba(4, 16, 24, .07));
       z-index: 1;
     }
 
@@ -80,10 +86,10 @@
       padding-top: calc(22 * var(--u));
       padding-bottom: calc(52 * var(--u));
       background: linear-gradient(180deg,
-        rgba(255,255,255,.125) 0%,
-        rgba(255,255,255,.135) 13%,
-        rgba(255,255,255,.098) 34%,
-        rgba(255,255,255,.092) 100%);
+          rgba(255, 255, 255, .125) 0%,
+          rgba(255, 255, 255, .135) 13%,
+          rgba(255, 255, 255, .098) 34%,
+          rgba(255, 255, 255, .092) 100%);
       backdrop-filter: blur(calc(18 * var(--u))) saturate(115%);
       -webkit-backdrop-filter: blur(calc(18 * var(--u))) saturate(115%);
       border-radius: calc(26 * var(--u));
@@ -101,7 +107,7 @@
       height: calc(29 * var(--u));
       border-radius: calc(3 * var(--u));
       background: #ffffff;
-      box-shadow: 0 0 calc(10 * var(--u)) rgba(255,255,255,.55);
+      box-shadow: 0 0 calc(10 * var(--u)) rgba(255, 255, 255, .55);
       animation: growY 0.50s var(--e-out) 0.68s both;
       transform-origin: center;
     }
@@ -357,12 +363,29 @@
       animation: riseIn 0.60s var(--e-out) both;
     }
 
-    .forecast-temp-item:nth-child(1) { animation-delay: 1.26s; }
-    .forecast-temp-item:nth-child(2) { animation-delay: 1.33s; }
-    .forecast-temp-item:nth-child(3) { animation-delay: 1.40s; }
-    .forecast-temp-item:nth-child(4) { animation-delay: 1.47s; }
-    .forecast-temp-item:nth-child(5) { animation-delay: 1.54s; }
-    .forecast-temp-item:nth-child(6) { animation-delay: 1.61s; }
+    .forecast-temp-item:nth-child(1) {
+      animation-delay: 1.26s;
+    }
+
+    .forecast-temp-item:nth-child(2) {
+      animation-delay: 1.33s;
+    }
+
+    .forecast-temp-item:nth-child(3) {
+      animation-delay: 1.40s;
+    }
+
+    .forecast-temp-item:nth-child(4) {
+      animation-delay: 1.47s;
+    }
+
+    .forecast-temp-item:nth-child(5) {
+      animation-delay: 1.54s;
+    }
+
+    .forecast-temp-item:nth-child(6) {
+      animation-delay: 1.61s;
+    }
 
     .forecast-temp-item span {
       font-size: calc(37 * var(--u));
@@ -419,12 +442,29 @@
       animation: riseIn 0.50s var(--e-out) both;
     }
 
-    .day-item:nth-child(1) { animation-delay: 2.100s; }
-    .day-item:nth-child(2) { animation-delay: 2.155s; }
-    .day-item:nth-child(3) { animation-delay: 2.210s; }
-    .day-item:nth-child(4) { animation-delay: 2.265s; }
-    .day-item:nth-child(5) { animation-delay: 2.320s; }
-    .day-item:nth-child(6) { animation-delay: 2.375s; }
+    .day-item:nth-child(1) {
+      animation-delay: 2.100s;
+    }
+
+    .day-item:nth-child(2) {
+      animation-delay: 2.155s;
+    }
+
+    .day-item:nth-child(3) {
+      animation-delay: 2.210s;
+    }
+
+    .day-item:nth-child(4) {
+      animation-delay: 2.265s;
+    }
+
+    .day-item:nth-child(5) {
+      animation-delay: 2.320s;
+    }
+
+    .day-item:nth-child(6) {
+      animation-delay: 2.375s;
+    }
 
     .day-item.on {
       color: #ffffff;
@@ -446,10 +486,10 @@
 
     .card {
       background: linear-gradient(180deg,
-        rgba(255,255,255,.20) 0%,
-        rgba(255,255,255,.258) 24%,
-        rgba(255,255,255,.252) 78%,
-        rgba(255,255,255,.232) 100%);
+          rgba(255, 255, 255, .20) 0%,
+          rgba(255, 255, 255, .258) 24%,
+          rgba(255, 255, 255, .252) 78%,
+          rgba(255, 255, 255, .232) 100%);
       backdrop-filter: blur(calc(26 * var(--u))) saturate(118%);
       -webkit-backdrop-filter: blur(calc(26 * var(--u))) saturate(118%);
       border-radius: calc(24 * var(--u));
@@ -462,18 +502,19 @@
     .card:hover {
       transform: translateY(calc(-2 * var(--u)));
       background: linear-gradient(180deg,
-        rgba(255,255,255,.24) 0%,
-        rgba(255,255,255,.29) 24%,
-        rgba(255,255,255,.28) 78%,
-        rgba(255,255,255,.26) 100%);
+          rgba(255, 255, 255, .24) 0%,
+          rgba(255, 255, 255, .29) 24%,
+          rgba(255, 255, 255, .28) 78%,
+          rgba(255, 255, 255, .26) 100%);
     }
 
-    .card::after, .chip::after {
+    .card::after,
+    .chip::after {
       content: "";
       position: absolute;
       inset: 0;
       width: 38%;
-      background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,.17) 50%, transparent 100%);
+      background: linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, .17) 50%, transparent 100%);
       transform: skewX(-18deg);
       animation: sheen 1.15s var(--e-soft) 2.55s 1 both;
       pointer-events: none;
@@ -552,9 +593,17 @@
       justify-content: space-between;
     }
 
-    .card:nth-child(2) { animation: slideR 0.95s var(--e-out) 0.92s both; }
-    .card:nth-child(3) { animation: slideR 0.95s var(--e-out) 1.03s both; }
-    .card:nth-child(4) { animation: slideR 0.95s var(--e-out) 1.14s both; }
+    .card:nth-child(2) {
+      animation: slideR 0.95s var(--e-out) 0.92s both;
+    }
+
+    .card:nth-child(3) {
+      animation: slideR 0.95s var(--e-out) 1.03s both;
+    }
+
+    .card:nth-child(4) {
+      animation: slideR 0.95s var(--e-out) 1.14s both;
+    }
 
     .row-info {
       display: flex;
@@ -601,76 +650,152 @@
 
     /* Animations */
     @keyframes riseIn {
-      from { opacity: 0; transform: translateY(var(--ry, 14px)); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(var(--ry, 14px));
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes slideL {
-      from { opacity: 0; transform: translateX(-26px); }
-      to { opacity: 1; transform: translateX(0); }
+      from {
+        opacity: 0;
+        transform: translateX(-26px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
 
     @keyframes slideR {
-      from { opacity: 0; transform: translateX(30px) scale(0.985); }
-      to { opacity: 1; transform: translateX(0) scale(1); }
+      from {
+        opacity: 0;
+        transform: translateX(30px) scale(0.985);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
     }
 
     @keyframes popIn {
-      from { opacity: 0; transform: scale(0.7); }
-      to { opacity: 1; transform: scale(1); }
+      from {
+        opacity: 0;
+        transform: scale(0.7);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     @keyframes growY {
-      from { transform: scaleY(0); }
-      to { transform: scaleY(1); }
+      from {
+        transform: scaleY(0);
+      }
+
+      to {
+        transform: scaleY(1);
+      }
     }
 
     @keyframes lineUp {
-      from { transform: translateY(115%); }
-      to { transform: translateY(0); }
+      from {
+        transform: translateY(115%);
+      }
+
+      to {
+        transform: translateY(0);
+      }
     }
 
     @keyframes wipeDown {
-      from { opacity: 0; clip-path: inset(0 0 100% 0); }
-      to { opacity: 1; clip-path: inset(0 0 0 0); }
+      from {
+        opacity: 0;
+        clip-path: inset(0 0 100% 0);
+      }
+
+      to {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+      }
     }
 
     @keyframes wipeRight {
-      from { opacity: 0; clip-path: inset(0 100% 0 0); }
-      to { opacity: 1; clip-path: inset(0 0 0 0); }
+      from {
+        opacity: 0;
+        clip-path: inset(0 100% 0 0);
+      }
+
+      to {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+      }
     }
 
     @keyframes drawLine {
-      to { stroke-dashoffset: 0; }
+      to {
+        stroke-dashoffset: 0;
+      }
     }
 
     @keyframes wipeX {
-      to { transform: scaleX(1); }
+      to {
+        transform: scaleX(1);
+      }
     }
 
     @keyframes sheen {
-      from { transform: translate3d(-150%, 0, 0) skewX(-18deg); }
-      to   { transform: translate3d(260%, 0, 0) skewX(-18deg); }
+      from {
+        transform: translate3d(-150%, 0, 0) skewX(-18deg);
+      }
+
+      to {
+        transform: translate3d(260%, 0, 0) skewX(-18deg);
+      }
     }
 
     /* Responsive Rules */
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
+
+      *,
+      *::before,
+      *::after {
         animation: none !important;
         transition: none !important;
       }
-      .card::after, .chip::after {
+
+      .card::after,
+      .chip::after {
         display: none;
       }
+
       .wline {
         stroke-dashoffset: 0 !important;
       }
+
       .wclip-rect {
         transform: scaleX(1) !important;
       }
-      .sidebar, .header .greeting .welcome, .header .greeting .user-name,
-      .sidebar .logout, .chip, .hero h1 .ln span, .blurb, .card,
-      .forecast-temp-item, .day-item {
+
+      .sidebar,
+      .header .greeting .welcome,
+      .header .greeting .user-name,
+      .sidebar .logout,
+      .chip,
+      .hero h1 .ln span,
+      .blurb,
+      .card,
+      .forecast-temp-item,
+      .day-item {
         opacity: 1 !important;
         transform: none !important;
       }
@@ -680,15 +805,19 @@
       :root {
         --u: min(100vw / 430, 1.22px);
       }
-      html, body {
+
+      html,
+      body {
         overflow-y: auto;
       }
+
       .stage {
         position: relative;
         inset: auto;
         min-height: 100vh;
         padding-bottom: calc(90 * var(--u));
       }
+
       .sidebar {
         position: fixed;
         bottom: 0;
@@ -703,18 +832,22 @@
         justify-content: space-between;
         animation: riseIn 0.5s ease both;
       }
+
       .sidebar .pip {
         display: none;
       }
+
       .sidebar .nav {
         flex-direction: row;
         margin-top: 0;
         gap: calc(20 * var(--u));
         width: auto;
       }
+
       .sidebar .logout {
         margin-top: 0;
       }
+
       .header {
         position: relative;
         top: 0;
@@ -723,6 +856,7 @@
         padding: calc(20 * var(--u));
         height: auto;
       }
+
       .hero {
         position: relative;
         top: 0;
@@ -730,9 +864,11 @@
         padding: 0 calc(20 * var(--u));
         max-width: 100%;
       }
+
       .hero .blurb {
         width: 100%;
       }
+
       .rail {
         position: relative;
         top: 0;
@@ -742,6 +878,7 @@
         padding: 0 calc(20 * var(--u));
         margin-top: calc(30 * var(--u));
       }
+
       .forecast {
         position: relative;
         left: 0;
@@ -759,13 +896,15 @@
     }
   </style>
 </head>
+
 <body>
   <div class="stage">
     <!-- SVG Icon Sprite -->
     <svg style="display: none;">
       <symbol id="logo-icon" viewBox="0 0 40 40">
         <rect width="40" height="40" rx="12" fill="rgba(255,255,255,0.18)" />
-        <path d="M8 15 Q14 10, 20 15 T32 15 M8 20 Q14 15, 20 20 T32 20 M8 25 Q14 20, 20 25 T32 25" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+        <path d="M8 15 Q14 10, 20 15 T32 15 M8 20 Q14 15, 20 20 T32 20 M8 25 Q14 20, 20 25 T32 25" fill="none"
+          stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
       </symbol>
       <symbol id="i-grid" viewBox="0 0 24 24">
         <rect x="3" y="3" width="8" height="8" rx="2" fill="currentColor" />
@@ -778,55 +917,79 @@
       </symbol>
       <symbol id="i-globe" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2" />
-        <path d="M3.6 9h16.8M3.6 15h16.8M12 3a15.3 15.3 0 0 1 4 9 15.3 15.3 0 0 1-4 9 15.3 15.3 0 0 1-4-9 15.3 15.3 0 0 1 4-9z" fill="none" stroke="currentColor" stroke-width="2" />
+        <path
+          d="M3.6 9h16.8M3.6 15h16.8M12 3a15.3 15.3 0 0 1 4 9 15.3 15.3 0 0 1-4 9 15.3 15.3 0 0 1-4-9 15.3 15.3 0 0 1 4-9z"
+          fill="none" stroke="currentColor" stroke-width="2" />
       </symbol>
       <symbol id="i-cal" viewBox="0 0 24 24">
         <rect x="3" y="4" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2" />
         <path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
       </symbol>
       <symbol id="i-gear" viewBox="0 0 24 24">
-        <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.488.488 0 0 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" fill="currentColor" />
+        <path
+          d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.488.488 0 0 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"
+          fill="currentColor" />
       </symbol>
       <symbol id="i-out" viewBox="0 0 24 24">
-        <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" fill="currentColor" />
+        <path
+          d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"
+          fill="currentColor" />
       </symbol>
       <symbol id="i-plus" viewBox="0 0 24 24">
         <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor" />
       </symbol>
       <symbol id="i-search" viewBox="0 0 24 24">
-        <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="currentColor" />
+        <path
+          d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+          fill="currentColor" />
       </symbol>
       <symbol id="i-bell" viewBox="0 0 24 24">
-        <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" fill="currentColor" />
+        <path
+          d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"
+          fill="currentColor" />
       </symbol>
       <symbol id="i-pin" viewBox="0 0 24 24">
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor" />
+        <path
+          d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+          fill="currentColor" />
       </symbol>
       <symbol id="i-wind" viewBox="0 0 24 24">
-        <path d="M14.5 17a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 14.5 12H2v2h12.5a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5H12v2h2.5zM19.5 7a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 19.5 2H2v2h17.5a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5H17v2h2.5zM10.5 10a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 10.5 5H2v2h8.5a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5H8v2h2.5z" fill="currentColor" />
+        <path
+          d="M14.5 17a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 14.5 12H2v2h12.5a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5H12v2h2.5zM19.5 7a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 19.5 2H2v2h17.5a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5H17v2h2.5zM10.5 10a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 10.5 5H2v2h8.5a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5H8v2h2.5z"
+          fill="currentColor" />
       </symbol>
       <symbol id="i-drop" viewBox="0 0 24 24">
         <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" fill="currentColor" />
       </symbol>
       <symbol id="i-gust" viewBox="0 0 24 24">
-        <path d="M12 4C7.03 4 3 8.03 3 13c0 2.12.74 4.07 1.97 5.61L4.35 19.2a1 1 0 0 0 1.41 1.41l.62-.62A9.957 9.957 0 0 0 12 23c4.97 0 9-4.03 9-9 0-4.97-4.03-9-9-9zm0 17c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-12h2v5h-2zm0 7h2v2h-2z" fill="currentColor" />
+        <path
+          d="M12 4C7.03 4 3 8.03 3 13c0 2.12.74 4.07 1.97 5.61L4.35 19.2a1 1 0 0 0 1.41 1.41l.62-.62A9.957 9.957 0 0 0 12 23c4.97 0 9-4.03 9-9 0-4.97-4.03-9-9-9zm0 17c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-12h2v5h-2zm0 7h2v2h-2z"
+          fill="currentColor" />
       </symbol>
       <symbol id="i-cloud" viewBox="0 0 24 24">
-        <path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z" fill="currentColor" />
+        <path
+          d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"
+          fill="currentColor" />
       </symbol>
       <symbol id="i-cloud2" viewBox="0 0 24 24">
-        <path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z" fill="currentColor" opacity="0.8" />
+        <path
+          d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"
+          fill="currentColor" opacity="0.8" />
         <circle cx="19" cy="6" r="3" fill="currentColor" />
       </symbol>
       <symbol id="i-hail" viewBox="0 0 24 24">
-        <path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z" fill="currentColor" />
+        <path
+          d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"
+          fill="currentColor" />
         <circle cx="7" cy="22" r="1.5" fill="currentColor" />
         <circle cx="12" cy="22" r="1.5" fill="currentColor" />
         <circle cx="17" cy="22" r="1.5" fill="currentColor" />
       </symbol>
       <symbol id="i-sun" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="5" fill="currentColor" />
-        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        <path
+          d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" />
       </symbol>
       <symbol id="i-avatar" viewBox="0 0 24 24">
         <circle cx="12" cy="8" r="4" fill="currentColor" />
@@ -838,27 +1001,41 @@
     <aside class="sidebar" aria-label="Main Navigation">
       <div class="pip"></div>
       <div class="logo" title="9CELL Weather App">
-        <svg><use href="#logo-icon" /></svg>
+        <svg>
+          <use href="#logo-icon" />
+        </svg>
       </div>
       <nav class="nav">
         <a href="#dashboard" aria-label="Dashboard" aria-current="page" title="Dashboard">
-          <svg><use href="#i-grid" /></svg>
+          <svg>
+            <use href="#i-grid" />
+          </svg>
         </a>
         <a href="#reports" aria-label="Reports" title="Reports">
-          <svg><use href="#i-chart" /></svg>
+          <svg>
+            <use href="#i-chart" />
+          </svg>
         </a>
         <a href="#explore" aria-label="Explore regions" title="Explore regions">
-          <svg><use href="#i-globe" /></svg>
+          <svg>
+            <use href="#i-globe" />
+          </svg>
         </a>
         <a href="#calendar" aria-label="Calendar" title="Calendar">
-          <svg><use href="#i-cal" /></svg>
+          <svg>
+            <use href="#i-cal" />
+          </svg>
         </a>
         <a href="#settings" aria-label="Settings" title="Settings">
-          <svg><use href="#i-gear" /></svg>
+          <svg>
+            <use href="#i-gear" />
+          </svg>
         </a>
       </nav>
       <button class="logout" aria-label="Sign out" title="Sign out">
-        <svg><use href="#i-out" /></svg>
+        <svg>
+          <use href="#i-out" />
+        </svg>
       </button>
     </aside>
 
@@ -870,16 +1047,24 @@
       </div>
       <div class="tools">
         <button class="tool-btn" aria-label="Add location" title="Add location">
-          <svg><use href="#i-plus" /></svg>
+          <svg>
+            <use href="#i-plus" />
+          </svg>
         </button>
         <button class="tool-btn" aria-label="Search" title="Search">
-          <svg><use href="#i-search" /></svg>
+          <svg>
+            <use href="#i-search" />
+          </svg>
         </button>
         <button class="tool-btn" aria-label="Notifications" title="Notifications">
-          <svg><use href="#i-bell" /></svg>
+          <svg>
+            <use href="#i-bell" />
+          </svg>
         </button>
         <a href="#profile" class="tool-btn tool-avatar" aria-label="Profile" title="Profile">
-          <svg><use href="#i-avatar" /></svg>
+          <svg>
+            <use href="#i-avatar" />
+          </svg>
         </a>
       </div>
     </header>
@@ -892,7 +1077,8 @@
         <span class="ln"><span>with Heavy Rain</span></span>
       </h1>
       <p class="blurb">
-        Partly cloudy with occasional snow showers. High around 50°F. Wind from the east 11 to 21 mph. Snow chance is 40%, with rainfall expected to be less than an inch.
+        Partly cloudy with occasional snow showers. High around 50°F. Wind from the east 11 to 21 mph. Snow chance is
+        40%, with rainfall expected to be less than an inch.
       </p>
     </main>
 
@@ -901,27 +1087,39 @@
       <div class="forecast-temps">
         <div class="forecast-temp-item">
           <span>11°</span>
-          <svg><use href="#i-cloud" /></svg>
+          <svg>
+            <use href="#i-cloud" />
+          </svg>
         </div>
         <div class="forecast-temp-item">
           <span>13°</span>
-          <svg><use href="#i-cloud2" /></svg>
+          <svg>
+            <use href="#i-cloud2" />
+          </svg>
         </div>
         <div class="forecast-temp-item">
           <span>14°</span>
-          <svg><use href="#i-cloud2" /></svg>
+          <svg>
+            <use href="#i-cloud2" />
+          </svg>
         </div>
         <div class="forecast-temp-item">
           <span>10°</span>
-          <svg><use href="#i-hail" /></svg>
+          <svg>
+            <use href="#i-hail" />
+          </svg>
         </div>
         <div class="forecast-temp-item">
           <span>19°</span>
-          <svg><use href="#i-sun" /></svg>
+          <svg>
+            <use href="#i-sun" />
+          </svg>
         </div>
         <div class="forecast-temp-item">
           <span>12°</span>
-          <svg><use href="#i-cloud" /></svg>
+          <svg>
+            <use href="#i-cloud" />
+          </svg>
         </div>
       </div>
 
@@ -951,16 +1149,24 @@
           </defs>
 
           <!-- Closed Fill Path -->
-          <path d="M 0,135 C 80,135 90,105 167,105 C 240,105 260,90 334,90 C 410,90 430,150 501,150 C 570,150 590,30 668,30 C 745,30 760,120 835,120 L 835,230 L 0,230 Z" fill="#ffffff" mask="url(#wfade)" clip-path="url(#wclip)" />
+          <path
+            d="M 0,135 C 80,135 90,105 167,105 C 240,105 260,90 334,90 C 410,90 430,150 501,150 C 570,150 590,30 668,30 C 745,30 760,120 835,120 L 835,230 L 0,230 Z"
+            fill="#ffffff" mask="url(#wfade)" clip-path="url(#wclip)" />
 
           <!-- Outline 1 -->
-          <path class="wline" pathLength="1" d="M 0,135 C 80,135 90,105 167,105 C 240,105 260,90 334,90 C 410,90 430,150 501,150 C 570,150 590,30 668,30 C 745,30 760,120 835,120" fill="none" stroke="url(#wg)" stroke-width="6.2" stroke-opacity="0.17" />
+          <path class="wline" pathLength="1"
+            d="M 0,135 C 80,135 90,105 167,105 C 240,105 260,90 334,90 C 410,90 430,150 501,150 C 570,150 590,30 668,30 C 745,30 760,120 835,120"
+            fill="none" stroke="url(#wg)" stroke-width="6.2" stroke-opacity="0.17" />
 
           <!-- Outline 2 -->
-          <path class="wline" pathLength="1" d="M 0,135 C 80,135 90,105 167,105 C 240,105 260,90 334,90 C 410,90 430,150 501,150 C 570,150 590,30 668,30 C 745,30 760,120 835,120" fill="none" stroke="url(#wg)" stroke-width="4.6" stroke-opacity="0.26" />
+          <path class="wline" pathLength="1"
+            d="M 0,135 C 80,135 90,105 167,105 C 240,105 260,90 334,90 C 410,90 430,150 501,150 C 570,150 590,30 668,30 C 745,30 760,120 835,120"
+            fill="none" stroke="url(#wg)" stroke-width="4.6" stroke-opacity="0.26" />
 
           <!-- Outline 3 -->
-          <path class="wline" pathLength="1" d="M 0,135 C 80,135 90,105 167,105 C 240,105 260,90 334,90 C 410,90 430,150 501,150 C 570,150 590,30 668,30 C 745,30 760,120 835,120" fill="none" stroke="url(#wg)" stroke-width="3.4" stroke-opacity="1" />
+          <path class="wline" pathLength="1"
+            d="M 0,135 C 80,135 90,105 167,105 C 240,105 260,90 334,90 C 410,90 430,150 501,150 C 570,150 590,30 668,30 C 745,30 760,120 835,120"
+            fill="none" stroke="url(#wg)" stroke-width="3.4" stroke-opacity="1" />
         </svg>
       </div>
 
@@ -979,26 +1185,34 @@
       <!-- Card A (Big Main Card) -->
       <div class="card big">
         <div class="card-location">
-          <svg><use href="#i-pin" /></svg>
-          <span>Central Jakarta</span>
+          <svg>
+            <use href="#i-pin" />
+          </svg>
+          <span>Port Harcourt, NG</span>
         </div>
 
         <div class="big-temp">
-          10° <i>C</i>
+          27° <i>C</i>
         </div>
 
         <div class="card-metrics">
           <div class="metric-item">
-            <svg><use href="#i-wind" /></svg>
-            <span>19 mph</span>
+            <svg>
+              <use href="#i-wind" />
+            </svg>
+            <span>5 mph</span>
           </div>
           <div class="metric-item">
-            <svg><use href="#i-drop" /></svg>
-            <span>40%</span>
+            <svg>
+              <use href="#i-drop" />
+            </svg>
+            <span>81%</span>
           </div>
           <div class="metric-item">
-            <svg><use href="#i-gust" /></svg>
-            <span>15km/h</span>
+            <svg>
+              <use href="#i-gust" />
+            </svg>
+            <span>9km/h</span>
           </div>
         </div>
       </div>
@@ -1006,42 +1220,49 @@
       <!-- Card B -->
       <div class="card row">
         <div class="row-info">
-          <span class="row-country">Indonesia</span>
-          <span class="row-city">North Jakarta</span>
-          <span class="row-condition">Mostly Sunny</span>
+          <span class="row-country">Nigeria</span>
+          <span class="row-city">Lagos</span>
+          <span class="row-condition">Partly Cloudy</span>
         </div>
         <div class="row-temp-box">
-          <span class="row-temp">12°</span>
-          <svg><use href="#i-cloud" /></svg>
+          <span class="row-temp">28°</span>
+          <svg>
+            <use href="#i-cloud" />
+          </svg>
         </div>
       </div>
 
       <!-- Card C -->
       <div class="card row">
         <div class="row-info">
-          <span class="row-country">Indonesia</span>
-          <span class="row-city">Bandung</span>
-          <span class="row-condition">Cloudy</span>
+          <span class="row-country">Nigeria</span>
+          <span class="row-city">Abuja</span>
+          <span class="row-condition">Sunny</span>
         </div>
         <div class="row-temp-box">
-          <span class="row-temp">10°</span>
-          <svg><use href="#i-cloud" /></svg>
+          <span class="row-temp">30°</span>
+          <svg>
+            <use href="#i-sun" />
+          </svg>
         </div>
       </div>
 
       <!-- Card D -->
       <div class="card row">
         <div class="row-info">
-          <span class="row-country">Indonesia</span>
-          <span class="row-city">South Jakarta</span>
-          <span class="row-condition">Sunny</span>
+          <span class="row-country">Nigeria</span>
+          <span class="row-city">Calabar</span>
+          <span class="row-condition">Cloudy</span>
         </div>
         <div class="row-temp-box">
-          <span class="row-temp">14°</span>
-          <svg><use href="#i-cloud2" /></svg>
+          <span class="row-temp">26°</span>
+          <svg>
+            <use href="#i-cloud2" />
+          </svg>
         </div>
       </div>
     </aside>
   </div>
 </body>
+
 </html>
