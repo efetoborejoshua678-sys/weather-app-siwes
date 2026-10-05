@@ -1,51 +1,242 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './App.css';
 
-const API_BASE_URL = 'https://weather-app-siwes-production.up.railway.app';
+const DEFAULT_API_KEY = '1ae9d034b9ff3491b9ab7d6822f53019';
+const BACKEND_URL = process.env.REACT_APP_API_BASE_URL || 'https://weather-app-siwes-production.up.railway.app';
+const LOCAL_BACKEND_URL = 'http://localhost:5000';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [unit, setUnit] = useState('C');
+
+  // Main Card & Hero State
   const [currentCity, setCurrentCity] = useState('Central Jakarta');
-  const [currentTemp, setCurrentTemp] = useState('10');
-  const [currentUnit] = useState('C');
   const [currentCountry, setCurrentCountry] = useState('Indonesia');
+  const [currentTempC, setCurrentTempC] = useState(10);
   const [currentCondition, setCurrentCondition] = useState('Strom with Heavy Rain');
-  const [currentWind, setCurrentWind] = useState('19 mph');
-  const [currentHumidity, setCurrentHumidity] = useState('40%');
-  const [currentGust, setCurrentGust] = useState('15km/h');
+  const [currentWindMph, setCurrentWindMph] = useState(19);
+  const [currentHumidity, setCurrentHumidity] = useState(40);
+  const [currentGustKm, setCurrentGustKm] = useState(15);
   const [blurbText, setBlurbText] = useState(
     'Partly cloudy with occasional snow showers. High around 50°F. Wind from the east 11 to 21 mph. Snow chance is 40%, with rainfall expected to be less than an inch.'
   );
 
-  const handleSearchSubmit = async (e) => {
-    e.preventDefault();
-    if (!searchQuery.trim()) return;
+  // Forecast Strip State (6 values)
+  const [forecastItems, setForecastItems] = useState([
+    { tempC: 11, day: 'Sunday', icon: '#i-cloud' },
+    { tempC: 13, day: 'Monday', icon: '#i-cloud2' },
+    { tempC: 14, day: 'Tuesday', icon: '#i-cloud2' },
+    { tempC: 10, day: 'Wednesday', icon: '#i-hail', active: true },
+    { tempC: 19, day: 'Thursday', icon: '#i-sun' },
+    { tempC: 12, day: 'Friday', icon: '#i-cloud' }
+  ]);
+
+  // Regional Cards State
+  const [regionalCards, setRegionalCards] = useState([
+    { country: 'Indonesia', city: 'North Jakarta', condition: 'Mostly Sunny', tempC: 12, icon: '#i-cloud' },
+    { country: 'Indonesia', city: 'Bandung', condition: 'Cloudy', tempC: 10, icon: '#i-cloud' },
+    { country: 'Indonesia', city: 'South Jakarta', condition: 'Sunny', tempC: 14, icon: '#i-cloud2' }
+  ]);
+
+  // Helper to map weather condition to SVG icon symbol ID
+  const getIconForCondition = (mainCond) => {
+    if (!mainCond) return '#i-cloud';
+    const cond = mainCond.toLowerCase();
+    if (cond.includes('clear') || cond.includes('sun')) return '#i-sun';
+    if (cond.includes('rain') || cond.includes('drizzle')) return '#i-cloud2';
+    if (cond.includes('thunder') || cond.includes('hail') || cond.includes('snow')) return '#i-hail';
+    return '#i-cloud';
+  };
+
+  // Helper to format temperature based on °C or °F
+  const formatTemp = useCallback(
+    (tempInC) => {
+      if (unit === 'F') {
+        return Math.round((tempInC * 9) / 5 + 32);
+      }
+      return Math.round(tempInC);
+    },
+    [unit]
+  );
+
+  // Resilient API Call (tries backend first, then local backend, then direct OpenWeatherMap API fallback)
+  const fetchCurrentWeatherData = useCallback(async (city) => {
+    const safeCity = encodeURIComponent(city.trim());
+
+    // 1. Try production backend
+    try {
+      const res = await axios.get(`${BACKEND_URL}/api/weather/current/${safeCity}`, { timeout: 4000 });
+      if (res.data && res.data.main) return res.data;
+    } catch (e) {
+      console.log('Production backend unavailable, trying local server...');
+    }
+
+    // 2. Try local backend
+    try {
+      const res = await axios.get(`${LOCAL_BACKEND_URL}/api/weather/current/${safeCity}`, { timeout: 3000 });
+      if (res.data && res.data.main) return res.data;
+    } catch (e) {
+      console.log('Local backend unavailable, using direct API fallback...');
+    }
+
+    // 3. Fallback direct API
+    const directRes = await axios.get(
+      `https://api.openweathermap.org/data/2.5/weather?q=${safeCity}&units=metric&appid=${DEFAULT_API_KEY}`
+    );
+    return directRes.data;
+  }, []);
+
+  const fetchForecastData = useCallback(async (city) => {
+    const safeCity = encodeURIComponent(city.trim());
 
     try {
-      const safeCity = encodeURIComponent(searchQuery.trim());
-      const res = await axios.get(`${API_BASE_URL}/api/weather/current/${safeCity}`);
-      if (res.data) {
-        const data = res.data;
-        setCurrentCity(data.name || searchQuery);
-        setCurrentCountry(data.sys?.country || 'Global');
-        setCurrentTemp(Math.round(data.main?.temp || 10).toString());
-        setCurrentCondition(data.weather?.[0]?.main || 'Clear');
-        setCurrentWind(`${Math.round(data.wind?.speed || 5)} mph`);
-        setCurrentHumidity(`${data.main?.humidity || 40}%`);
-        setCurrentGust(`${Math.round((data.wind?.gust || data.wind?.speed || 4) * 3.6)}km/h`);
-        setBlurbText(
-          `${data.weather?.[0]?.description || 'Weather condition'}. Temp is ${Math.round(
-            data.main?.temp
-          )}°C, feels like ${Math.round(data.main?.feels_like)}°C. Humidity is ${
-            data.main?.humidity
-          }%.`
+      const res = await axios.get(`${BACKEND_URL}/api/weather/forecast/${safeCity}`, { timeout: 4000 });
+      if (res.data && res.data.list) return res.data;
+    } catch (e) {
+      // Try local
+      try {
+        const res = await axios.get(`${LOCAL_BACKEND_URL}/api/weather/forecast/${safeCity}`, { timeout: 3000 });
+        if (res.data && res.data.list) return res.data;
+      } catch (err) {
+        // Direct fallback
+        const directRes = await axios.get(
+          `https://api.openweathermap.org/data/2.5/forecast?q=${safeCity}&units=metric&appid=${DEFAULT_API_KEY}`
         );
+        return directRes.data;
       }
-    } catch (err) {
-      console.log('Search error:', err);
+    }
+    return null;
+  }, []);
+
+  // Update full weather dashboard for a city
+  const updateCityWeather = useCallback(
+    async (city) => {
+      setLoading(true);
+      setErrorMsg('');
+
+      try {
+        const weatherData = await fetchCurrentWeatherData(city);
+        if (weatherData && weatherData.main) {
+          setCurrentCity(weatherData.name);
+          setCurrentCountry(weatherData.sys?.country || '');
+          setCurrentTempC(weatherData.main.temp);
+          setCurrentCondition(weatherData.weather?.[0]?.main || 'Clear');
+          setCurrentWindMph(Math.round((weatherData.wind?.speed || 5) * 2.237));
+          setCurrentHumidity(weatherData.main.humidity || 40);
+          setCurrentGustKm(Math.round((weatherData.wind?.gust || weatherData.wind?.speed || 4) * 3.6));
+
+          const desc = weatherData.weather?.[0]?.description || 'weather condition';
+          const capitalizedDesc = desc.charAt(0).toUpperCase() + desc.slice(1);
+          setBlurbText(
+            `${capitalizedDesc}. High around ${Math.round((weatherData.main.temp_max * 9) / 5 + 32)}°F. Wind from the east ${Math.round(
+              (weatherData.wind?.speed || 5) * 2.237
+            )} mph. Humidity is ${weatherData.main.humidity}%, with pressure around ${weatherData.main.pressure} hPa.`
+          );
+        }
+
+        const forecastData = await fetchForecastData(city);
+        if (forecastData && forecastData.list && forecastData.list.length >= 6) {
+          const step = Math.floor(forecastData.list.length / 6);
+          const newForecastItems = [];
+          const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+          for (let i = 0; i < 6; i++) {
+            const item = forecastData.list[i * step] || forecastData.list[i];
+            const dateObj = new Date(item.dt * 1000);
+            const dayName = daysOfWeek[dateObj.getDay()];
+            newForecastItems.push({
+              tempC: item.main.temp,
+              day: dayName,
+              icon: getIconForCondition(item.weather?.[0]?.main),
+              active: i === 3
+            });
+          }
+          setForecastItems(newForecastItems);
+        }
+      } catch (err) {
+        console.error('Weather load error:', err);
+        setErrorMsg('City not found. Please check spelling.');
+      } finally {
+        setLoading(false);
+      }
+    },
+    [fetchCurrentWeatherData, fetchForecastData]
+  );
+
+  // Fetch regional cards on initial load
+  useEffect(() => {
+    updateCityWeather('Jakarta');
+
+    // Fetch regional cities concurrently
+    const regionalCities = [
+      { country: 'Indonesia', city: 'North Jakarta' },
+      { country: 'Indonesia', city: 'Bandung' },
+      { country: 'Indonesia', city: 'South Jakarta' }
+    ];
+
+    Promise.all(
+      regionalCities.map(async (item) => {
+        try {
+          const data = await fetchCurrentWeatherData(item.city);
+          return {
+            country: data.sys?.country === 'ID' ? 'Indonesia' : data.sys?.country || item.country,
+            city: data.name || item.city,
+            condition: data.weather?.[0]?.main || 'Clear',
+            tempC: data.main?.temp ?? 12,
+            icon: getIconForCondition(data.weather?.[0]?.main)
+          };
+        } catch (e) {
+          return { ...item, condition: 'Clear', tempC: 12, icon: '#i-cloud' };
+        }
+      })
+    ).then((results) => {
+      if (results && results.length === 3) {
+        setRegionalCards(results);
+      }
+    });
+  }, [fetchCurrentWeatherData, updateCityWeather]);
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      updateCityWeather(searchQuery.trim());
     }
   };
+
+  // Compute dynamic SVG curve for forecast temperatures
+  const computeSvgPath = () => {
+    const temps = forecastItems.map((f) => f.tempC);
+    const minT = Math.min(...temps);
+    const maxT = Math.max(...temps);
+    const range = maxT - minT || 1;
+
+    // Map 6 points horizontally across x = 0, 167, 334, 501, 668, 835
+    // Y values mapped between 40 (highest temp) and 160 (lowest temp)
+    const points = temps.map((t, idx) => {
+      const x = idx * (835 / 5);
+      const normalizedY = 160 - ((t - minT) / range) * 120;
+      return { x, y: normalizedY };
+    });
+
+    let pathD = `M ${points[0].x},${points[0].y}`;
+    for (let i = 0; i < points.length - 1; i++) {
+      const p1 = points[i];
+      const p2 = points[i + 1];
+      const cx1 = p1.x + (p2.x - p1.x) / 2;
+      const cy1 = p1.y;
+      const cx2 = p1.x + (p2.x - p1.x) / 2;
+      const cy2 = p2.y;
+      pathD += ` C ${cx1},${cy1} ${cx2},${cy2} ${p2.x},${p2.y}`;
+    }
+
+    const fillD = `${pathD} L 835,230 L 0,230 Z`;
+    return { pathD, fillD };
+  };
+
+  const { pathD, fillD } = computeSvgPath();
 
   return (
     <div className="stage">
@@ -170,13 +361,27 @@ function App() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button type="submit" className="tool-btn" style={{ width: '32px', height: '32px', background: 'transparent', border: 'none' }} title="Search">
+            <button
+              type="submit"
+              className="tool-btn"
+              style={{ width: '32px', height: '32px', background: 'transparent', border: 'none' }}
+              title="Search"
+              disabled={loading}
+            >
               <svg><use href="#i-search" /></svg>
             </button>
           </form>
-          <button className="tool-btn" aria-label="Add location" title="Add location">
-            <svg><use href="#i-plus" /></svg>
+
+          {/* Unit Toggle Button */}
+          <button
+            className="tool-btn"
+            title="Toggle °C / °F"
+            onClick={() => setUnit((prev) => (prev === 'C' ? 'F' : 'C'))}
+            style={{ fontWeight: '700', fontSize: '15px' }}
+          >
+            °{unit}
           </button>
+
           <button className="tool-btn" aria-label="Notifications" title="Notifications">
             <svg><use href="#i-bell" /></svg>
           </button>
@@ -188,7 +393,10 @@ function App() {
 
       {/* 3) HERO */}
       <main className="hero">
-        <div className="chip">Weather Forecast</div>
+        <div className="chip">
+          {loading ? 'Fetching Weather...' : 'Weather Forecast'}
+        </div>
+        {errorMsg && <p style={{ color: '#ff6b6b', marginBottom: '10px', fontSize: '14px' }}>⚠️ {errorMsg}</p>}
         <h1>
           <span className="ln"><span>{currentCondition}</span></span>
         </h1>
@@ -198,39 +406,17 @@ function App() {
       {/* 4) FORECAST STRIP */}
       <section className="forecast" aria-label="Forecast Strip">
         <div className="forecast-temps">
-          <div className="forecast-temp-item">
-            <span>11°</span>
-            <svg><use href="#i-cloud" /></svg>
-          </div>
-          <div className="forecast-temp-item">
-            <span>13°</span>
-            <svg><use href="#i-cloud2" /></svg>
-          </div>
-          <div className="forecast-temp-item">
-            <span>14°</span>
-            <svg><use href="#i-cloud2" /></svg>
-          </div>
-          <div className="forecast-temp-item">
-            <span>10°</span>
-            <svg><use href="#i-hail" /></svg>
-          </div>
-          <div className="forecast-temp-item">
-            <span>19°</span>
-            <svg><use href="#i-sun" /></svg>
-          </div>
-          <div className="forecast-temp-item">
-            <span>12°</span>
-            <svg><use href="#i-cloud" /></svg>
-          </div>
+          {forecastItems.map((item, idx) => (
+            <div className="forecast-temp-item" key={idx}>
+              <span>{formatTemp(item.tempC)}°</span>
+              <svg><use href={item.icon} /></svg>
+            </div>
+          ))}
         </div>
 
-        {/* Animated SVG Wave Chart */}
+        {/* Dynamic SVG Wave Chart */}
         <div className="chart-container">
-          <svg
-            className="chart-svg"
-            viewBox="0 0 835 230"
-            preserveAspectRatio="none"
-          >
+          <svg className="chart-svg" viewBox="0 0 835 230" preserveAspectRatio="none">
             <defs>
               <linearGradient id="wg" x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0%" stopColor="#ffffff" stopOpacity="0.3" />
@@ -254,18 +440,13 @@ function App() {
             </defs>
 
             {/* Closed Fill Path */}
-            <path
-              d="M 0,135 C 80,135 90,105 167,105 C 240,105 260,90 334,90 C 410,90 430,150 501,150 C 570,150 590,30 668,30 C 745,30 760,120 835,120 L 835,230 L 0,230 Z"
-              fill="#ffffff"
-              mask="url(#wfade)"
-              clipPath="url(#wclip)"
-            />
+            <path d={fillD} fill="#ffffff" mask="url(#wfade)" clipPath="url(#wclip)" />
 
             {/* Outline 1 (outer ambient glow) */}
             <path
               className="wline"
               pathLength="1"
-              d="M 0,135 C 80,135 90,105 167,105 C 240,105 260,90 334,90 C 410,90 430,150 501,150 C 570,150 590,30 668,30 C 745,30 760,120 835,120"
+              d={pathD}
               fill="none"
               stroke="url(#wg)"
               strokeWidth="6.2"
@@ -276,7 +457,7 @@ function App() {
             <path
               className="wline"
               pathLength="1"
-              d="M 0,135 C 80,135 90,105 167,105 C 240,105 260,90 334,90 C 410,90 430,150 501,150 C 570,150 590,30 668,30 C 745,30 760,120 835,120"
+              d={pathD}
               fill="none"
               stroke="url(#wg)"
               strokeWidth="4.6"
@@ -287,7 +468,7 @@ function App() {
             <path
               className="wline"
               pathLength="1"
-              d="M 0,135 C 80,135 90,105 167,105 C 240,105 260,90 334,90 C 410,90 430,150 501,150 C 570,150 590,30 668,30 C 745,30 760,120 835,120"
+              d={pathD}
               fill="none"
               stroke="url(#wg)"
               strokeWidth="3.4"
@@ -297,12 +478,11 @@ function App() {
         </div>
 
         <div className="forecast-days">
-          <span className="day-item">Sunday</span>
-          <span className="day-item">Monday</span>
-          <span className="day-item">Tuesday</span>
-          <span className="day-item on">Wednesday</span>
-          <span className="day-item">Thursday</span>
-          <span className="day-item">Friday</span>
+          {forecastItems.map((item, idx) => (
+            <span className={`day-item ${item.active ? 'on' : ''}`} key={idx}>
+              {item.day}
+            </span>
+          ))}
         </div>
       </section>
 
@@ -315,64 +495,45 @@ function App() {
             <span>{currentCity}{currentCountry ? `, ${currentCountry}` : ''}</span>
           </div>
 
-          <div className="big-temp">
-            {currentTemp}° <i>{currentUnit}</i>
+          <div
+            className="big-temp"
+            style={{ cursor: 'pointer' }}
+            title="Click to toggle °C / °F"
+            onClick={() => setUnit((prev) => (prev === 'C' ? 'F' : 'C'))}
+          >
+            {formatTemp(currentTempC)}° <i>{unit}</i>
           </div>
 
           <div className="card-metrics">
             <div className="metric-item">
               <svg><use href="#i-wind" /></svg>
-              <span>{currentWind}</span>
+              <span>{currentWindMph} mph</span>
             </div>
             <div className="metric-item">
               <svg><use href="#i-drop" /></svg>
-              <span>{currentHumidity}</span>
+              <span>{currentHumidity}%</span>
             </div>
             <div className="metric-item">
               <svg><use href="#i-gust" /></svg>
-              <span>{currentGust}</span>
+              <span>{currentGustKm}km/h</span>
             </div>
           </div>
         </div>
 
-        {/* Card B */}
-        <div className="card row">
-          <div className="row-info">
-            <span className="row-country">Indonesia</span>
-            <span className="row-city">North Jakarta</span>
-            <span className="row-condition">Mostly Sunny</span>
+        {/* Regional Cards */}
+        {regionalCards.map((card, idx) => (
+          <div className="card row" key={idx}>
+            <div className="row-info">
+              <span className="row-country">{card.country}</span>
+              <span className="row-city">{card.city}</span>
+              <span className="row-condition">{card.condition}</span>
+            </div>
+            <div className="row-temp-box">
+              <span className="row-temp">{formatTemp(card.tempC)}°</span>
+              <svg><use href={card.icon} /></svg>
+            </div>
           </div>
-          <div className="row-temp-box">
-            <span className="row-temp">12°</span>
-            <svg><use href="#i-cloud" /></svg>
-          </div>
-        </div>
-
-        {/* Card C */}
-        <div className="card row">
-          <div className="row-info">
-            <span className="row-country">Indonesia</span>
-            <span className="row-city">Bandung</span>
-            <span className="row-condition">Cloudy</span>
-          </div>
-          <div className="row-temp-box">
-            <span className="row-temp">10°</span>
-            <svg><use href="#i-cloud" /></svg>
-          </div>
-        </div>
-
-        {/* Card D */}
-        <div className="card row">
-          <div className="row-info">
-            <span className="row-country">Indonesia</span>
-            <span className="row-city">South Jakarta</span>
-            <span className="row-condition">Sunny</span>
-          </div>
-          <div className="row-temp-box">
-            <span className="row-temp">14°</span>
-            <svg><use href="#i-cloud2" /></svg>
-          </div>
-        </div>
+        ))}
       </aside>
     </div>
   );
